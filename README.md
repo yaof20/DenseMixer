@@ -10,11 +10,11 @@
 
 <p align="center">
   <a href="#what-is-densemixer">What is DenseMixer?</a> •
-  <a href="#key-features">Key Features</a> •
-  <a href="#experiments">Experiments</a> •
-  <a href="#quick-start">Quick Start</a> •
-  <a href="#efficiency">Efficiency</a> •
-  <a href="#citation">Citation</a>
+  <a href="#-key-features">Key Features</a> •
+  <a href="#-experiments">Experiments</a> •
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-efficiency-analysis">Efficiency</a> •
+  <a href="#-citation">Citation</a>
 </p>
 
 [DenseMixer](https://fengyao.notion.site/moe-posttraining) is a novel MoE post-training technique that empowers MoE training with more precise router gradient estimation, consistently outperforming conventional MoE training in downstream tasks.
@@ -193,7 +193,35 @@ logging.getLogger("densemixer").setLevel(logging.WARNING)
 ## ⚡ Efficiency Analysis
 
 **FLOPs**: **1.46x** overhead vs conventional training (theoretical analysis on Qwen3-30B-A3B)
+
+<details>
+<summary><b>📊 Detailed FLOPs Analysis</b></summary>
+
+```bash
+Model Training Cost Analysis Results --- Conventional Training for Qwen3-30B-A3B ---
+Number of parameters: 30,431,444,992
+Number of Forward TFLOPs per layer: 16.85
+Number of Backward TFLOPs per layer: 33.70
+Number of TFLOPs per layer: 50.54
+Peak memory cost: 157.93 GBs
+
+
+Model Training Cost Analysis Results: --- DenseMixer Training for Qwen3-30B-A3B ---
+Number of parameters: 30,431,444,992
+Number of Forward TFLOPs per layer: 40.04
+Number of Backward TFLOPs per layer: 33.70 # we assume DenseMixer doesn't change backward significantly
+Number of TFLOPs per layer: 73.74
+Peak memory cost: 164.96 GBs
+
+FLOPs: DenseMixer / Conventional = 1.46x
+```
+
+*Detailed FLOPs analysis available in [efficiency_analysis/flops_compute.py](./efficiency_analysis/flops_compute.py)*
+
+</details>
+
 **Memory**: Negligible overhead - model weights are already loaded on GPU  
+
 **Time**: Negligible when training with small scale of data
 
 *Detailed FLOPs analysis available in [efficiency_analysis/flops_compute.py](./efficiency_analysis/flops_compute.py)*
