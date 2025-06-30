@@ -192,8 +192,11 @@ logging.getLogger("densemixer").setLevel(logging.WARNING)
 
 ## ⚡ Efficiency Analysis
 
-**Memory**: Negligible overhead - model weights are already loaded on GPU
-**Time**: Minimal increase - only extra forward pass on inactive experts, no additional backward computation
+**FLOPs**: **1.46x** overhead vs conventional training (theoretical analysis on Qwen3-30B-A3B)
+**Memory**: Negligible overhead - model weights are already loaded on GPU  
+**Time**: Negligible when training with small scale of data
+
+*Detailed FLOPs analysis available in [efficiency_analysis/flops_compute.py](./efficiency_analysis/flops_compute.py)*
 
 | Model | Dataset | Conventional | DenseMixer | Overhead |
 |-------|---------|--------------|------------|----------|
