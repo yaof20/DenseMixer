@@ -206,7 +206,7 @@ Number of TFLOPs per layer: 50.54
 Peak memory cost: 157.93 GBs
 
 
-Model Training Cost Analysis Results: --- DenseMixer Training for Qwen3-30B-A3B ---
+Model Training Cost Analysis Results --- DenseMixer Training for Qwen3-30B-A3B ---
 Number of parameters: 30,431,444,992
 Number of Forward TFLOPs per layer: 40.04
 Number of Backward TFLOPs per layer: 33.70 # we assume DenseMixer doesn't change backward significantly
