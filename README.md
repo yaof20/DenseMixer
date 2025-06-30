@@ -1,5 +1,5 @@
 <h1 align="center">🎨 DenseMixer 🎨</h1>
-<p align="center"><b>MoE Post-Training with Precise Router Gradients</b>  
+<p align="center"><b>Improving MoE Post-Training with Precise Router Gradients</b>  
 (<a href="https://fengyao.notion.site/moe-posttraining">Blog</a>)</p>
 
 <p align="center">
@@ -11,17 +11,17 @@
 <p align="center">
   <a href="#what-is-densemixer">What is DenseMixer?</a> •
   <a href="#key-features">Key Features</a> •
+  <a href="#experiments">Experiments</a> •
   <a href="#quick-start">Quick Start</a> •
-  <a href="#configuration">Configuration</a> •
-  <a href="#results">Results</a> •
-  <a href="#citation">Citation</a> •
+  <a href="#efficiency">Efficiency</a> •
+  <a href="#citation">Citation</a>
 </p>
 
 [DenseMixer](https://fengyao.notion.site/moe-posttraining) is a novel MoE post-training technique that empowers MoE training with more precise router gradient estimation, consistently outperforming conventional MoE training in downstream tasks.
 
 <h3 align="center" id="what-is-densemixer"><i>What is DenseMixer?</i></h3>
 
-**DenseMixer** addresses the non-differentiable Top-K routing problem in MoE training by implementing a straight-through estimator (STE). This enables more precise router gradients by computing outputs from all experts during forward pass for better gradient estimation during backward pass.
+**DenseMixer** addresses the non-differentiable Top-K routing problem in MoE training by implementing a straight-through estimator (STE). This enables more precise router gradients by computing outputs from all experts during forward pass for better gradient estimation during backward pass. For technical details and mathematical formulation, please refer to our [blog](https://fengyao.notion.site/moe-posttraining).
 
 ## 🚀 Key Features
 
@@ -31,7 +31,7 @@
 - **Parameter-efficient**: Compatible with LoRA and other PEFT methods
 - **No inference overhead**: Zero impact on model inference speed
 
-## 📈 Empirical Results
+## 📈 Experiments
 
 DenseMixer consistently outperforms conventional MoE training across:
 
@@ -41,8 +41,10 @@ DenseMixer consistently outperforms conventional MoE training across:
 - **Data types**: Instruction tuning and long reasoning data
 
 <p align="center">
-  <img src="assets/gain.png" alt="DenseMixer Performance Gains" width="600">
+  <img src="assets/gain.png" alt="DenseMixer Performance Gains" width="800">
 </p>
+
+**Reproducible Experiments**: For detailed training scripts, configurations, and evaluation code, please refer to the [experiments](./experiments/) folder.
 
 <details>
 <summary><b>📊 Qwen1.5-MoE-A2.7B (14B):</b> +2.2% average improvement across 7 tasks</summary>
@@ -94,6 +96,7 @@ DenseMixer consistently outperforms conventional MoE training across:
 *Results shown for temperature=0.6, top_p=0.95 decoding parameters*
 
 </details>
+
 
 ## ⚡ Quick Start
 
@@ -187,20 +190,10 @@ logging.getLogger("densemixer").setLevel(logging.INFO)
 logging.getLogger("densemixer").setLevel(logging.WARNING)
 ```
 
-## 🔬 Technical Details
-
-DenseMixer addresses the non-differentiability problem in MoE routing by:
-
-1. **Forward Pass**: Computes outputs from all experts (not just Top-K)
-2. **Backward Pass**: Uses straight-through estimator for precise router gradients
-3. **Gradient Flow**: Enables better router parameter updates
-
-This approach trades compute efficiency for training quality, making it ideal for post-training scenarios where compute cost is less critical than performance.
-
 ## ⚡ Efficiency Analysis
 
 **Memory**: Negligible overhead - model weights are already loaded on GPU
-**Time**: Minimal increase - only extra forward pass, no additional backward computation
+**Time**: Minimal increase - only extra forward pass on inactive experts, no additional backward computation
 
 | Model | Dataset | Conventional | DenseMixer | Overhead |
 |-------|---------|--------------|------------|----------|
