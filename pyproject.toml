@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "densemixer"
+version = "1.0.0"
+description = "Enhanced Mixture of Experts implementation with optimized Straight-Through Estimator router"
+readme = "README.md"
+authors = [{name = "Feng Yao", email = "fengyao@ucsd.edu"}]
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+keywords = ["transformers", "huggingface", "moe", "qwen3", "olmoe", "ste", "router"]
+dependencies = [
+    "transformers>=4.51.0",
+    "torch>=2.0.0",
+]
+requires-python = ">=3.12"
+
+[project.scripts]
+densemixer = "densemixer.commands:run"
+
+[project.urls]
+"Homepage" = "https://github.com/yaof20/DenseMixer"
+"Bug Tracker" = "https://github.com/yaof20/DenseMixer/issues"
