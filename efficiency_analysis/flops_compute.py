@@ -123,11 +123,15 @@ def main():
     
     print(f"Model Training Cost Analysis Results --- Conventional Training for Qwen3-30B-A3B ---")
     print(f"Number of parameters: {num_parameters:,}")
+    print(f"Number of Forward TFLOPs per layer: {num_flops_forward:.2f}")
+    print(f"Number of Backward TFLOPs per layer: {num_flops_backward:.2f}")
     print(f"Number of TFLOPs per layer: {num_flops:.2f}")
     print(f"Peak memory cost: {memory_cost:.2f} GBs")
 
     print(f"\n\nModel Training Cost Analysis Results: --- Dense Mixer Training for Qwen3-30B-A3B ---")
     print(f"Number of parameters: {num_parameters_dm:,}")
+    print(f"Number of Forward TFLOPs per layer: {num_flops_forward_dm:.2f}")
+    print(f"Number of Backward TFLOPs per layer: {num_flops_backward_dm:.2f}")
     print(f"Number of TFLOPs per layer: {num_flops_dm:.2f}")
     print(f"Peak memory cost: {memory_cost_dm:.2f} GBs")
 
