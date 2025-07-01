@@ -1,0 +1,13 @@
+### Note: DO NOT use quantized model or quantization_bit when merging lora adapters
+
+### model
+model_name_or_path: Qwen/Qwen1.5-MoE-A2.7B
+adapter_name_or_path:MoE-Finetune/LLaMA-Factory/saves/qwen1.5-moe-a2.7b/lora/sft_bs64/qwen1.5_esft_law_lr5e-4_unfrozen/checkpoint-45
+template: qwen
+trust_remote_code: true
+
+### export
+export_dir: output/qwen1.5_esft_law_lr5e-4_ckpt45_unfrozen_ckpt45
+export_size: 5
+export_device: auto  # choices: [cpu, auto]
+export_legacy_format: false
