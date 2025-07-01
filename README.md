@@ -21,7 +21,7 @@
 
 <h3 align="center" id="what-is-densemixer"><i>What is DenseMixer?</i></h3>
 
-**DenseMixer** addresses the non-differentiable Top-K routing problem in MoE training by implementing a straight-through estimator (STE). This enables more precise router gradients by computing all experts's output during forward pass for better gradient estimation during backward pass. For more technical details, please refer to our [blog](https://fengyao.notion.site/moe-posttraining).
+**DenseMixer** addresses the non-differentiable Top-K routing problem in MoE training via straight-through estimator (STE). This enables more precise router gradients by computing all experts's output during forward pass for better gradient estimation during backward pass. For more technical details, please refer to our [blog](https://fengyao.notion.site/moe-posttraining).
 
 ## 🚀 Key Features
 
