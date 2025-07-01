@@ -1,0 +1,10 @@
+========================================
+start training: Tue Jun  3 01:48:55 UTC 2025
+config: base_s1_sl16k_bs16_lr1e-5_zero3.yaml
+log saved at: logs/train_ste_base_s1_sl16k_bs16_lr1e-5_zero3.log
+executing command: CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 llamafactory-cli train examples/train_full/qwen3-30b/ste/base_s1_sl16k_bs16_lr1e-5_zero3.yaml
+----------------------------------------
+/mnt/weka/home/shibo.hao/feng/code/MoE-Finetune/LLaMA-Factory/run/train_ste-math.sh: line 46: llamafactory-cli: command not found
+completed training for: base_s1_sl16k_bs16_lr1e-5_zero3.yaml
+========================================
+All training jobs completed at: Tue Jun  3 01:48:55 UTC 2025

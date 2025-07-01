@@ -1,0 +1,45 @@
+### model
+model_name_or_path: Qwen/Qwen1.5-MoE-A2.7B
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+deepspeed: examples/deepspeed/ds_z3_config.json  # choices: [ds_z0_config.json, ds_z2_config.json, ds_z3_config.json]
+
+### dataset
+dataset: esft_translation_lf
+template: qwen
+cutoff_len: 4096
+overwrite_cache: true
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
+
+### output
+output_dir: saves/qwen1.5-moe-a2.7b/lora/sft_bs64/qwen1.5_esft_translation_lr3e-4
+logging_steps: 1
+save_strategy: "epoch" 
+save_total_limit: 5
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: true
+report_to: wandb  # choices: [none, wandb, tensorboard, swanlab, mlflow]
+run_name: "qwen1.5_esft_translation_lr3e-4_lora"
+
+### train
+per_device_train_batch_size: 16
+learning_rate: 3.0e-4
+num_train_epochs: 3.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+
+### eval
+# eval_dataset: alpaca_en_demo
+# val_size: 0.1
+# per_device_eval_batch_size: 1
+# eval_strategy: steps
+# eval_steps: 500
