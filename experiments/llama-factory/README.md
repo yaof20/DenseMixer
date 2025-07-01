@@ -58,6 +58,11 @@ bash run/qwen3/train_full-math.sh
 ```
 
 ### 3. DenseMixer
+To run DenseMixer, you need one additional setup
+```bash
+pip install densemixer
+densemixer setup
+```
 
 **Full Fine-tuning & LoRA**
 ```bash
