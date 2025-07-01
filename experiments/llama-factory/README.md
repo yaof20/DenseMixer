@@ -38,7 +38,7 @@ We support the following fine-tuning methods. For each method, replace `{dataset
 
 **Full Fine-tuning & LoRA**
 ```bash
-cd Llamafactory
+cd LLaMA-Factory
 export WANDB_API_KEY="YOUR_WANDB_API_KEY"
 bash run/qwen1.5/frozen_full/train_{dataset_name}_frozen.sh
 bash run/qwen1.5/frozen_lora/train_{dataset_name}.sh
@@ -48,20 +48,26 @@ bash run/qwen1.5/frozen_lora/train_{dataset_name}.sh
 
 **Full Fine-tuning & LoRA**
 ```bash
-cd Llamafactory
+cd LLaMA-Factory
 export WANDB_API_KEY="YOUR_WANDB_API_KEY"
 bash run/qwen1.5/conventional_full/train_{dataset_name}.sh
 bash run/qwen1.5/conventional_lora/train_{dataset_name}_unfrozen.sh
+###qwen3-30b
+bash run/qwen3/train_full-code.sh
+bash run/qwen3/train_full-math.sh
 ```
 
 ### 3. DenseMixer
 
 **Full Fine-tuning & LoRA**
 ```bash
-cd Llamafactory
+cd LLaMA-Factory
 export WANDB_API_KEY="YOUR_WANDB_API_KEY"
-bash run/qwen1.5/densemixer_full/train_{dataset_name}_ste.sh
-bash run/qwen1.5/densemixer_lora/train_{dataset_name}_unfrozen_ste.sh
+bash run/qwen1.5/densemixer_full/train_{dataset_name}_densemixer.sh
+bash run/qwen1.5/densemixer_lora/train_{dataset_name}_densemixer.sh
+###qwen3-30b
+bash run/qwen3/train_densemixer-code.sh
+bash run/qwen3/train_densemixer-math.sh
 ```
 
 ### 4. ESFT Fine-tuning
