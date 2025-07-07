@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "densemixer"
-version = "1.0.0"
+version = "1.0.1"
 description = "Enhanced Mixture of Experts implementation with optimized Straight-Through Estimator router"
 readme = "README.md"
 authors = [{name = "Feng Yao", email = "fengyao@ucsd.edu"}]
@@ -19,7 +19,7 @@ dependencies = [
     "transformers>=4.51.0",
     "torch>=2.0.0",
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 
 [project.scripts]
 densemixer = "densemixer.commands:run"
