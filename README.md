@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-blue.svg">
-  <img src="https://img.shields.io/badge/python-3.12+-blue">
+  <img src="https://img.shields.io/badge/python-3.10+-blue">
   <img src="https://img.shields.io/pypi/v/densemixer?color=green">  
 </p>
 

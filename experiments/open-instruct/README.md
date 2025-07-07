@@ -6,11 +6,17 @@ This folder contains the code and instructions for reproducing the experiments o
 
 ## Table of Contents
 
-- [Environment Setup](#environment-setup)
-- [Data Preparation](#data-preparation)
-- [Training](#training)
-- [Evaluation](#evaluation)
-- [References](#references)
+- [Post-Training for OLMoE](#post-training-for-olmoe)
+  - [Table of Contents](#table-of-contents)
+  - [Environment Setup](#environment-setup)
+  - [Data Preparation](#data-preparation)
+  - [Training](#training)
+    - [1. Frozen Router](#1-frozen-router)
+    - [2. Conventional Training](#2-conventional-training)
+    - [3. DenseMixer](#3-densemixer)
+    - [4. ESFT Fine-tuning](#4-esft-fine-tuning)
+  - [Evaluation](#evaluation)
+  - [References](#references)
 
 ---
 

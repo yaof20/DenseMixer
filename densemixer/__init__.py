@@ -5,7 +5,7 @@ import os
 import logging
 import sys
 
-__version__ = "0.1.0"
+__version__ = "1.0.1"
 
 # Set up logging to ensure patching information is always visible
 def setup_logging():
