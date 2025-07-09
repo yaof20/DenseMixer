@@ -291,6 +291,14 @@ FLOPs: DenseMixer / Conventional = 1.46x
 | Qwen1.5-MoE | Intent (7K) | 22 min | 24 min | +9% |
 | Qwen3-MoE | S1 (1K) | 2.8h | 3.6h | +29% |
 
+## 🚧 Roadmap & Future Improvements
+
+While DenseMixer already delivers significant performance gains, we're working on several improvements to make it more efficient and production-ready:
+
+- [ ] **Optimize backward FLOPs**: Currently backward FLOPs increase alongside forward FLOPs, but this is unnecessary. We'll optimize the backward pass to reduce training overhead while maintaining performance gains
+- [ ] **Integrate modern MoE kernels**: Replace transformers' native for-loop MoE implementation with efficient kernels (e.g., grouped_gemm) for better large-scale training performance
+- [ ] **Industry integration**: Extend support beyond `open-instruct`/`llama-factory` to MoE-optimized frameworks like `Megatron` for seamless production adoption
+
 ## 📚 Citation
 
 If you find our work useful, please cite us:
