@@ -305,7 +305,7 @@ If you find our work useful, please cite us:
 
 ```bibtex
 @misc{yao2025densemixer,
-  title = {DenseMixer: Solving MoE Post-Training with Precise Router Gradients},
+  title = {DenseMixer: Improving MoE Post-Training with Precise Router Gradient},
   url = {https://fengyao.notion.site/moe-posttraining},
   author = {Yao, Feng and Cui, Junxia and Zhang, Ruohan and Liu, Liyuan and Hao, Shibo and Zhang, Li and Dong, Chengyu and Wang, Shuohang and Shen, Yelong and Gao, Jianfeng and Shang, Jingbo},
   journal = {Feng Yao's Notion},
