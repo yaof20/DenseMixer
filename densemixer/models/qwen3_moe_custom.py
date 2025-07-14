@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn.functional as F
 from ..logging_utils import log_custom_forward_usage
@@ -57,6 +58,9 @@ class CustomQwen3MoeSparseMoeBlock:
         • Use GateGradSTE to recompute dense constants in backward phase, ensuring gate gradients are identical to original dense implementation  
         • Includes partscale_fix_expert normalization (when norm_topk_prob=True)
         """
+        if os.getenv('DENSEMIXER_LEGACY', '0') == '1':
+            return self.forward_old(hidden_states)
+                
         log_custom_forward_usage("Qwen3-MoE, with v1 implementation")
         # -------------------------------------------------- shape & dtype --------------------------------------------------
         B, L, H = hidden_states.shape
