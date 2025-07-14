@@ -69,8 +69,8 @@ class CustomQwen3MoeSparseMoeBlock:
         dtype, device = hidden_states.dtype, hidden_states.device
 
         # ------------------------------------------------ 1. routing ----------------------------------------------------------
-        router_logits   = self.gate(flat_hidden)               # (N, E)
-        routing_weights = torch.softmax(router_logits, dim=-1) # (N, E)   (float32 default consistent with PyTorch softmax)
+        router_logits   = self.gate(flat_hidden)                                   # (N, E)
+        routing_weights = torch.softmax(router_logits, dim=-1, dtype=torch.float)  # (N, E) (float32 default consistent with PyTorch softmax)
 
         # ------------------------------------------------ 2. top-k ---------------------------------------------------------
         routing_weights_topk, selected_experts = torch.topk(
