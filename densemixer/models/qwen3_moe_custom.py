@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn.functional as F
 from ..logging_utils import log_custom_forward_usage
@@ -37,7 +38,7 @@ class GateGradSTE(Function):
             for e, expert in enumerate(experts):
                 out_e = expert(flat_hidden)               # (N, H) detached
                 # gradient of each token w.r.t w_{t,e} = grad_out_t · out_e_t
-                grad_routing[:, e] = torch.sum(grad_output * out_e, dim=-1)
+                grad_routing[:, e] = torch.bmm(grad_output.view(-1,1, N), out_e.view(-1, N, 1)).squeeze()
 
         # ---------------- return ----------------
         # gradient w.r.t sparse_out = grad_output as is
@@ -57,6 +58,10 @@ class CustomQwen3MoeSparseMoeBlock:
         • Use GateGradSTE to recompute dense constants in backward phase, ensuring gate gradients are identical to original dense implementation  
         • Includes partscale_fix_expert normalization (when norm_topk_prob=True)
         """
+        if os.getenv('DENSEMIXER_LEGACY', '0') == '1':
+            return self.forward_old(hidden_states)
+                
+        log_custom_forward_usage("Qwen3-MoE, with v1 implementation")
         # -------------------------------------------------- shape & dtype --------------------------------------------------
         B, L, H = hidden_states.shape
         flat_hidden = hidden_states.view(-1, H)                # (N_tokens, H)
@@ -64,8 +69,8 @@ class CustomQwen3MoeSparseMoeBlock:
         dtype, device = hidden_states.dtype, hidden_states.device
 
         # ------------------------------------------------ 1. routing ----------------------------------------------------------
-        router_logits   = self.gate(flat_hidden)               # (N, E)
-        routing_weights = torch.softmax(router_logits, dim=-1) # (N, E)   (float32 default consistent with PyTorch softmax)
+        router_logits   = self.gate(flat_hidden)                                   # (N, E)
+        routing_weights = torch.softmax(router_logits, dim=-1, dtype=torch.float)  # (N, E) (float32 default consistent with PyTorch softmax)
 
         # ------------------------------------------------ 2. top-k ---------------------------------------------------------
         routing_weights_topk, selected_experts = torch.topk(
@@ -113,7 +118,7 @@ class CustomQwen3MoeSparseMoeBlock:
         final_flat = GateGradSTE.apply(
             sparse_out,              # (N,H)  → expert parameters need gradients
             routing_weights,         # (N,E)  → gate parameters need gradients
-            flat_hidden.detach(),    # (N,H)  → constant
+            flat_hidden,             # (N,H)  → constant
             self.experts             # python list
         )
 
@@ -124,7 +129,7 @@ class CustomQwen3MoeSparseMoeBlock:
         """
         original implementation with extra computation on the dense output
         """
-        log_custom_forward_usage("Qwen3-MoE")
+        log_custom_forward_usage("Qwen3-MoE, with v0 implementation")
         batch_size, seq_length, hidden_dim = hidden_states.shape
         dtype = hidden_states.dtype
         device = hidden_states.device
