@@ -61,30 +61,6 @@ def dequantize_model(model, dtype=torch.bfloat16, device="cuda"):
 
         return model
 
-
-@retry_on_exception()
-def push_folder_to_hub(
-    output_dir: str,
-    hf_repo_id: Optional[str] = None,
-    hf_repo_revision: Optional[str] = None,
-    private: bool = True,
-):
-    hf_repo_url = f"https://huggingface.co/{hf_repo_id}/tree/{hf_repo_revision}"
-    api = HfApi()
-    if not api.repo_exists(hf_repo_id):
-        api.create_repo(hf_repo_id, exist_ok=True, private=private)
-    if hf_repo_revision is not None:
-        api.create_branch(repo_id=hf_repo_id, branch=hf_repo_revision, exist_ok=True)
-    api.upload_folder(
-        repo_id=hf_repo_id,
-        revision=hf_repo_revision,
-        folder_path=output_dir,
-        commit_message="upload checkpoint",
-        run_as_future=False,
-    )
-    print(f"🔥 pushed to {hf_repo_url}")
-
-
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--lora_model_name_or_path", type=str, required=False)
@@ -99,7 +75,6 @@ def parse_args():
     parser.add_argument("--save_tokenizer", action="store_true")
     parser.add_argument("--use_fast_tokenizer", action="store_true")
     parser.add_argument("--pad_to_multiple_of", type=int, default=8)  # if you want to pad the token embeddings
-    parser.add_argument("--push_to_hub", action="store_true")
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
 
@@ -202,22 +177,3 @@ if __name__ == "__main__":
     if args.save_tokenizer:
         print(f"Saving the tokenizer to {output_dir}...")
         tokenizer.save_pretrained(output_dir)
-
-    if args.push_to_hub:
-        api = HfApi(token=os.environ["HF_TOKEN"])  # or use `HfFolder.get_token()` if token not passed directly
-        username = "username"
-        repo_name = f"{args.exp_name}__{int(time.time())}"
-        hf_repo_id = f"{username}/{repo_name}"
-
-        api.create_repo(
-            repo_id=hf_repo_id,
-            repo_type="model",
-            private=False,
-            exist_ok=True
-        )
-
-        push_folder_to_hub(
-            output_dir,
-            hf_repo_id,
-            private=False
-        )

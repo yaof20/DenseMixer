@@ -32,6 +32,8 @@ WEIGHT_DECAY=${WEIGHT_DECAY:-0.0}
 NUM_TRAIN_EPOCHS=${NUM_TRAIN_EPOCHS:-4}
 
 OUTPUT_SUFFIX=${OUTPUT_SUFFIX:-""}
+GRADIENT_CKPT=${GRADIENT_CKPT:-"false"}
+
 FREEZE_GATE=${FREEZE_GATE:-"false"}
 
 # # Common options for lora_attn mode
@@ -57,6 +59,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --devices)
             CUDA_DEVICES="$2"
+            shift 2
+            ;;
+        --gradient_checkpointing)
+            GRADIENT_CKPT="$2"
             shift 2
             ;;
         --port)
@@ -229,7 +235,7 @@ TRAIN_CMD="CUDA_VISIBLE_DEVICES=${CUDA_DEVICES} accelerate launch \
     --save_total_limit 1 \
     --exp_name $EXP_NAME \
     --checkpointing_steps epoch \
-    --gradient_checkpointing \
+    --gradient_checkpointing ${GRADIENT_CKPT}\
     --add_bos \
     ${CACHE_DIR_OPT} \
     ${COMMON_OPTS}"

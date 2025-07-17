@@ -28,4 +28,16 @@
 # - --expert_type (gate, token)
 
 # ESFT-Gate
-bash scripts/train/finetune/esft.sh --task intent --model olmoe --total_batch_size 256 --num_train_epochs 4 --devices 1,2 --port 29014 --lr 1e-3 --per_device_train_batch_size 4 --per_device_eval_batch_size 4 --expert_type gate
+bash scripts/train/finetune/esft.sh \
+    --task intent \
+    --model olmoe \
+    --total_batch_size 256 \
+    --num_train_epochs 4 \
+    --num_gpus 2 \
+    --devices 1,2 \
+    --port 29014 \
+    --lr 1e-3 \
+    --per_device_train_batch_size 4 \
+    --per_device_eval_batch_size 4 \
+    --expert_type gate \
+    --gradient_checkpointing false

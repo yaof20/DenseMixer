@@ -499,8 +499,6 @@ class FlatArguments:
     """Immediately exit after caching the dataset"""
     try_auto_save_to_beaker: bool = True
     """Whether to try to save the model to Beaker dataset `/output` after training"""
-    push_to_hub: bool = True
-    """Whether to upload the saved model to huggingface"""
     hf_entity: Optional[str] = None
     """The user or org name of the model repository from the Hugging Face Hub"""
     hf_repo_id: Optional[str] = None
@@ -540,7 +538,7 @@ class FlatArguments:
         #     or (self.dataset_mixer is not None and self.dataset_mixer_list is not None)
         # ):
         #     raise ValueError("Cannot provide two dataset selection mechanisms.")
-        if self.try_launch_beaker_eval_jobs and not self.push_to_hub:
+        if self.try_launch_beaker_eval_jobs:
             raise ValueError("Cannot launch Beaker evaluation jobs without pushing to the Hub.")
 
 
@@ -552,15 +550,6 @@ def main(args: FlatArguments):
     # args.run_name = f"{args.exp_name}__{args.seed}__{int(time.time())}"
     args.run_name = f"{args.exp_name}__LR{args.learning_rate}_epochs{args.num_train_epochs}_seed{args.seed}__{int(time.time())}"
 
-    if args.push_to_hub:
-        args.hf_repo_id = args.run_name
-        
-        if args.hf_entity is None:  # first try to use AI2 entity
-            args.hf_entity = maybe_use_ai2_hf_entity()
-        if args.hf_entity is None:  # then try to use the user's entity
-            args.hf_entity = HfApi().whoami()["name"]
-        
-        args.hf_repo_url = f"https://huggingface.co/{args.hf_repo_id}/tree/{args.hf_repo_revision}"
 
     if is_beaker_job():
         beaker_config = maybe_get_beaker_config()
@@ -1326,24 +1315,6 @@ def main(args: FlatArguments):
             print(f"Submit jobs after model training is finished - Stderr:\n{stderr.decode()}")
             print(f"Submit jobs after model training is finished - process return code: {process.returncode}")
 
-    if args.push_to_hub:
-        api = HfApi(token=os.environ["HF_TOKEN"])  # or use `HfFolder.get_token()` if token not passed directly
-
-        api.create_repo(
-            repo_id=args.hf_repo_id,
-            repo_type="model",
-            private=False,
-            exist_ok=True
-        )
-
-        output_path = args.output_dir
-        # Push the saved folder
-        push_folder_to_hub(
-            accelerator,
-            output_path,
-            args.hf_repo_id,
-            args.hf_repo_revision,
-        )
     accelerator.wait_for_everyone()
     if args.with_tracking:
         accelerator.end_training()
