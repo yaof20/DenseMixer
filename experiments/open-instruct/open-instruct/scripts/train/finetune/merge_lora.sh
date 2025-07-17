@@ -16,4 +16,3 @@ python open_instruct/merge_lora.py \
     --cache_dir "$CACHE_DIR" \
     --exp_name "$EXP_NAME" \
     --lora_router "$LORA_ROUTER" \
-    --push_to_hub

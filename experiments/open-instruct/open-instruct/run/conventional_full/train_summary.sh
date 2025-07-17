@@ -29,4 +29,15 @@
 
 
 # Vanilla Router-Full
-bash scripts/train/finetune/full.sh --task summary --model olmoe --total_batch_size 256 --num_train_epochs 4 --devices 0,1 --port 29000 --lr 2e-5 --per_device_train_batch_size 2 --per_device_eval_batch_size 2
+bash scripts/train/finetune/full.sh \
+    --task summary \
+    --model olmoe \
+    --total_batch_size 256 \
+    --num_train_epochs 4 \
+    --num_gpus 2 \
+    --devices 0,1 \
+    --port 29000 \
+    --lr 2e-5 \
+    --per_device_train_batch_size 2 \
+    --per_device_eval_batch_size 2 \
+    --gradient_checkpointing false
