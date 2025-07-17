@@ -40,7 +40,7 @@ bash scripts/train/finetune/full.sh \
     --num_gpus 2 \
     --devices 0,1 \
     --port 29000 \
-    --lr 2e-5 \
+    --lr 1e-6 \
     --per_device_train_batch_size 4 \
     --per_device_eval_batch_size 4 \
     --gradient_checkpointing false
