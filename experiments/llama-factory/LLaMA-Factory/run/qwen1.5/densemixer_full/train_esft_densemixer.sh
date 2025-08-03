@@ -26,7 +26,7 @@ CONFIG_FILES=(
     # "qwen1.5_esft_intent_lr2e-5.yaml"
 )
 
-export WANDB_API_KEY="2f969adfdb979201fcee7c251598a40e3f930937"
+export WANDB_API_KEY=""
 export WANDB_PROJECT="MoE-Finetune-qwen1.5"
 export DISABLE_VERSION_CHECK=1
 

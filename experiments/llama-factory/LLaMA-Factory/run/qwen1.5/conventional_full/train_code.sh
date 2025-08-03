@@ -11,7 +11,7 @@ method="full"
 
 CONFIG_FILES=(
     # "qwen1.5_esft_law_lr5e-6.yaml"
-    "qwen1.5_codealpaca_lr2e-6.yaml"
+    "qwen1.5_codealpaca_lr5e-6.yaml"
     # "qwen1.5_codealpaca_lr5e-6.yaml"
     # "qwen1.5_codealpaca_lr1e-6.yaml"
     # "qwen1.5_esft_intent_lr5e-6.yaml"

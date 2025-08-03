@@ -11,7 +11,7 @@ method="lora"
 
 CONFIG_FILES=(
 
-    "qwen1.5_codealpaca_lr2e-6_unfrozen.yaml"
+    "qwen1.5_codealpaca_lr2e-4_unfrozen.yaml"
 
 )
 
